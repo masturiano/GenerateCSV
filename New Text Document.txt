@@ -1,0 +1,11 @@
+--------------------------------------------------------------------------------------------------
+$formLog = "login";
+		$actionLog = "Log in";
+		$dateLogs = date('m/d/Y G:i:s');
+		$userLog = $common->userlog($_SESSION['CHRusername'],$dateLogs,$formLog,$actionLog,$_SESSION['strCode']);
+--------------------------------------------------------------------------------------------------
+function userlog($user,$dateLogs,$formLog,$actionLog,$str){
+		$sql = "INSERT INTO TBLlog(CHRusername,DATdatelog,CHRForms,CHRaction,CHRstore) VALUES('$user','$dateLogs','$formLog','$actionLog','$str')";
+		return $this->execQry($sql);
+	}
+--------------------------------------------------------------------------------------------------

@@ -1,0 +1,26 @@
+select * tblTnapPerksPointsTemp from tblTnapPerksPoints
+select count(*) from tblTnapPerksPoints
+
+BULK INSERT [ExclusivesHO].[dbo].[tblTnapPerksPointsTemp2]
+--(cCardNumber,cCustFullName,NULL,iPoints,lastName,dLastTranDate) 
+FROM 'C:\PerksCard_20150303.csv' 
+WITH 
+(FIELDTERMINATOR = ',',
+ROWTERMINATOR = '\n'
+)
+
+BULK
+INSERT CSVTest
+FROM 'c:\csvtest.txt'
+WITH
+(
+FIELDTERMINATOR = ',',
+ROWTERMINATOR = '\n'
+)
+
+INSERT INTO bulk_insert_test(first_name,last_name)
+INSERT INTO [ExclusivesHO].[dbo].[tblTnapPerksPoints](cCardNumber,cCustFullName,'NULL',iPoints,lastName,dLastTranDate) 
+SELECT
+*
+FROM
+OPENROWSET('Microsoft.Jet.OLEDB.4.0','text;HDR=NO;FMT=FixedLength;Database=c:\TnapCard_20150304.csv')

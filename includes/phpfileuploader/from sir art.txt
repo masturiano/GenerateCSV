@@ -1,0 +1,22 @@
+$file_name= basename($_FILES['fileKo']['name']);
+                $local_file = $_FILES['fileKo']['tmp_name'];
+                $handle = fopen ($local_file, "rb");
+                $contents = "";
+                while(!feof($handle)) {
+                                $line = fgets($handle);
+                                $contents .= "$line";
+                }
+                fclose ($handle);
+                $array = split ("\r\n", $contents);
+                $array_count = count($array);
+                $skus="";
+                $qryDelExmptSku = "delete from srp_temp";
+                mssql_query($qryDelExmptSku);
+                for ($v=0;$v<$array_count;$v++){ 
+                                $array2 = split (" ", $array[$v]);
+                                $grid0=trim($array2[0]); //sku   
+                                if ($grid0>"") {
+                                                $qryInsExmptSku = "insert into srp_temp (sku) values ('$grid0')";
+                                                mssql_query($qryInsExmptSku);
+                                }
+                }

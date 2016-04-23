@@ -1,0 +1,25 @@
+if (($handle = fopen($orafile, "r")) !== FALSE) {
+					while (($data = fgetcsv($handle, 0, "|")) !== FALSE) {
+						$num = count($data);
+						//echo "<p> $num fields in line $row: <br /></p>\n";
+					
+						//$info = explode("|",$data[$c]);
+						$info = $data;
+						//A01 only!!!!
+						$xqueryx = "INSERT INTO ar_invoice (invoice,invoice_date,trxn_type,strshrt,col005,strshrt2,seq,col008,type,gl_date,col011,col012,col013,amount,col015,curency,col017,filename) VALUES('".$info[0]."','".$info[1]."','".$info[2]."','".$info[3]."','".$info[4]."','".$info[5]."','".$info[6]."','".$info[7]."','".$info[8]."','".$info[9]."','".$info[10]."','".$info[11]."','".$info[12]."','".$info[13]."','".$info[14]."','".$info[15]."','".$info[16]."', '".$info[17]."')";
+						//mssql_query("SET IDENTITY_INSERT dtsloop_x ON");
+						$insert_item = mssql_query($xqueryx);
+						if($insert_item)
+						{
+							//echo "$('#test').append('<br />Line ... {$c} added successfully');";
+							
+						}
+						else
+						{
+							//echo "$('#test').append('<br />Line ... {$c} failed to add');";
+							$ermsg .= $info[18]."-";
+						}
+						
+					}
+					fclose($handle);
+				}
